@@ -866,7 +866,7 @@ public class GenericClientDstu3Test {
 	public void testFetchCapabilityStatementReceiveConformance() throws Exception {
 		final IParser p = ourCtx.newXmlParser();
 
-		final Conformance conf = new Conformance();
+		final CapabilityStatement conf = new CapabilityStatement();
 		conf.setCopyright("COPY");
 
 		final Patient patient = new Patient();
@@ -918,7 +918,7 @@ public class GenericClientDstu3Test {
 	public void testForceConformance() throws Exception {
 		final IParser p = ourCtx.newXmlParser();
 
-		final Conformance conf = new Conformance();
+		final CapabilityStatement conf = new CapabilityStatement();
 		conf.setCopyright("COPY");
 
 		final Patient patient = new Patient();
@@ -1904,7 +1904,7 @@ public class GenericClientDstu3Test {
 	public void testUserAgentForBinary() throws Exception {
 		IParser p = ourCtx.newXmlParser();
 
-		Conformance conf = new Conformance();
+		CapabilityStatement conf = new CapabilityStatement();
 		conf.setCopyright("COPY");
 
 		final String respString = p.encodeResourceToString(conf);
@@ -1941,7 +1941,7 @@ public class GenericClientDstu3Test {
 	public void testUserAgentForConformance() throws Exception {
 		IParser p = ourCtx.newXmlParser();
 
-		Conformance conf = new Conformance();
+		CapabilityStatement conf = new CapabilityStatement();
 		conf.setCopyright("COPY");
 
 		final String respString = p.encodeResourceToString(conf);
@@ -1958,7 +1958,7 @@ public class GenericClientDstu3Test {
 
 		IGenericClient client = ourCtx.newRestfulGenericClient("http://example.com/fhir");
 
-		client.fetchConformance().ofType(Conformance.class).execute();
+		client.fetchConformance().ofType(CapabilityStatement.class).execute();
 		assertEquals("http://example.com/fhir/metadata", capt.getAllValues().get(0).getURI().toASCIIString());
 		validateUserAgent(capt);
 	}
