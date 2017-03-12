@@ -33,7 +33,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.server.EncodingEnum;
 import ca.uhn.fhir.rest.server.exceptions.InternalErrorException;
 import ca.uhn.fhir.validation.IValidationContext;
-import ca.uhn.fhir.validation.IVaIssueSeveritylidatorModule;
+import ca.uhn.fhir.validation.IValidatorModule;
 
 public class FhirInstanceValidator extends BaseValidatorBridge implements IValidatorModule {
 
