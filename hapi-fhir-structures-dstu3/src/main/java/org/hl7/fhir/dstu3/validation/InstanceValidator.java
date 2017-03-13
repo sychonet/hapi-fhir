@@ -287,8 +287,7 @@ public class InstanceValidator extends BaseValidator implements IResourceValidat
     fpe.setHostServices(hostServices);
     source = Source.InstanceValidator;
   }
-
-
+  
   @Override
   public boolean isNoInvariantChecks() {
     return noInvariantChecks;
