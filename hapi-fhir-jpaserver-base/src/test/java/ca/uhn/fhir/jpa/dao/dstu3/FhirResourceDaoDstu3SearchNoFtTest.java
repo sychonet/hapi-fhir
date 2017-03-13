@@ -213,7 +213,7 @@ public class FhirResourceDaoDstu3SearchNoFtTest extends BaseJpaDstu3Test {
 		IIdType patId2 = myPatientDao.create(pat2, mySrd).getId().toUnqualifiedVersionless();
 
 		MedicationRequest mo = new MedicationRequest();
-		mo.getPatient().setReferenceElement(patId);
+		mo.getSubject().setReferenceElement(patId);
 		mo.setMedication(new Reference(medId));
 		IIdType moId = myMedicationRequestDao.create(mo, mySrd).getId().toUnqualifiedVersionless();
 		
@@ -298,20 +298,20 @@ public class FhirResourceDaoDstu3SearchNoFtTest extends BaseJpaDstu3Test {
 		pract2.addName().setFamily("SOME PRACT2");
 		myPractitionerDao.update(pract2, mySrd);
 		
-		DiagnosticRequest res = new DiagnosticRequest();
+		ProcedureRequest res = new ProcedureRequest();
 		res.addReplaces(new Reference("Practitioner/somepract"));
 		res.addReplaces(new Reference("Practitioner/somepract"));
 		res.addReplaces(new Reference("Practitioner/somepract2"));
 		res.addReplaces(new Reference("Practitioner/somepract2"));
 		
-		IIdType id = myDiagnosticRequestDao.create(res, mySrd).getId().toUnqualifiedVersionless();
+		IIdType id = myProcedureRequestDao.create(res, mySrd).getId().toUnqualifiedVersionless();
 		
 		Class<ResourceLink> type = ResourceLink.class;
 		List<?> results = myEntityManager.createQuery("SELECT i FROM " + type.getSimpleName() + " i", type).getResultList();
 		ourLog.info(toStringMultiline(results));
 		assertEquals(2, results.size());
 		
-		List<IIdType> actual = toUnqualifiedVersionlessIds(myDiagnosticRequestDao.search(DiagnosticRequest.SP_REPLACES, new ReferenceParam("Practitioner/somepract")));
+		List<IIdType> actual = toUnqualifiedVersionlessIds(myProcedureRequestDao.search(ProcedureRequest.SP_REPLACES, new ReferenceParam("Practitioner/somepract")));
 		assertThat(actual, contains(id));
 	}
 	
@@ -1910,7 +1910,7 @@ public class FhirResourceDaoDstu3SearchNoFtTest extends BaseJpaDstu3Test {
 			// Irrelevant include
 			SearchParameterMap params = new SearchParameterMap();
 			params.add(Patient.SP_FAMILY, new StringParam("Tester_" + methodName + "_P1"));
-			params.addInclude(Encounter.INCLUDE_INDICATION);
+			params.addInclude(Encounter.INCLUDE_EPISODEOFCARE);
 			IBundleProvider search = myPatientDao.search(params);
 			List<IBaseResource> patients = toList(search);
 			assertEquals(1, patients.size());

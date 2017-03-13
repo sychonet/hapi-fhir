@@ -70,7 +70,7 @@ import org.hl7.fhir.dstu3.model.Condition;
 import org.hl7.fhir.dstu3.model.DateTimeType;
 import org.hl7.fhir.dstu3.model.DateType;
 import org.hl7.fhir.dstu3.model.Device;
-import org.hl7.fhir.dstu3.model.DiagnosticRequest;
+import org.hl7.fhir.dstu3.model.ProcedureRequest;
 import org.hl7.fhir.dstu3.model.DocumentManifest;
 import org.hl7.fhir.dstu3.model.DocumentReference;
 import org.hl7.fhir.dstu3.model.Encounter;
@@ -885,17 +885,17 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 	 * See issue #52
 	 */
 	@Test
-	public void testDiagnosticRequestResources() throws Exception {
+	public void testProcedureRequestResources() throws Exception {
 		IGenericClient client = ourClient;
 
-		int initialSize = client.search().forResource(DiagnosticRequest.class).returnBundle(Bundle.class).execute().getEntry().size();
+		int initialSize = client.search().forResource(ProcedureRequest.class).returnBundle(Bundle.class).execute().getEntry().size();
 
-		DiagnosticRequest res = new DiagnosticRequest();
+		ProcedureRequest res = new ProcedureRequest();
 		res.addIdentifier().setSystem("urn:foo").setValue("123");
 
 		client.create().resource(res).execute();
 
-		int newSize = client.search().forResource(DiagnosticRequest.class).returnBundle(Bundle.class).execute().getEntry().size();
+		int newSize = client.search().forResource(ProcedureRequest.class).returnBundle(Bundle.class).execute().getEntry().size();
 
 		assertEquals(1, newSize - initialSize);
 
@@ -993,19 +993,19 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 		IIdType locCId = ourClient.create().resource(locChild).execute().getId().toUnqualifiedVersionless();
 
 		Encounter encU = new Encounter();
-		encU.getPatient().setReferenceElement(patientId);
+		encU.getSubject().setReferenceElement(patientId);
 		encU.addLocation().getLocation().setReferenceElement(locCId);
 		IIdType encUId = ourClient.create().resource(encU).execute().getId().toUnqualifiedVersionless();
 
 		Encounter enc = new Encounter();
-		enc.getPatient().setReferenceElement(patientId);
+		enc.getSubject().setReferenceElement(patientId);
 		enc.addLocation().getLocation().setReferenceElement(locCId);
 		IIdType encId = ourClient.create().resource(enc).execute().getId().toUnqualifiedVersionless();
 
 		Observation obs = new Observation();
 		obs.getSubject().setReferenceElement(patientId);
 		obs.getDevice().setReferenceElement(devId);
-		obs.getEncounter().setReferenceElement(encId);
+		obs.getContext().setReferenceElement(encId);
 		IIdType obsId = ourClient.create().resource(obs).execute().getId().toUnqualifiedVersionless();
 
 		ourLog.info("IDs: EncU:" + encUId.getIdPart() + " Enc:" + encId.getIdPart() + "  " + patientId.toUnqualifiedVersionless());
@@ -1061,14 +1061,14 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 		IIdType encUId = ourClient.create().resource(encU).execute().getId().toUnqualifiedVersionless();
 
 		Encounter enc = new Encounter();
-		enc.getPatient().setReferenceElement(patientId);
+		enc.getSubject().setReferenceElement(patientId);
 		enc.addLocation().getLocation().setReferenceElement(locCId);
 		IIdType encId = ourClient.create().resource(enc).execute().getId().toUnqualifiedVersionless();
 
 		Observation obs = new Observation();
 		obs.getSubject().setReferenceElement(patientId);
 		obs.getDevice().setReferenceElement(devId);
-		obs.getEncounter().setReferenceElement(encId);
+		obs.getContext().setReferenceElement(encId);
 		IIdType obsId = ourClient.create().resource(obs).execute().getId().toUnqualifiedVersionless();
 
 		Parameters output = ourClient.operation().onType(Encounter.class).named("everything").withNoParameters(Parameters.class).execute();
@@ -1241,7 +1241,7 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 		IIdType patId = myPatientDao.create(pat, mySrd).getId().toUnqualifiedVersionless();
 
 		MedicationRequest mo = new MedicationRequest();
-		mo.getPatient().setReferenceElement(patId);
+		mo.getSubject().setReferenceElement(patId);
 		mo.setMedication(new Reference(medId));
 		IIdType moId = myMedicationRequestDao.create(mo, mySrd).getId().toUnqualifiedVersionless();
 
@@ -1321,7 +1321,7 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 		IIdType obsId = ourClient.create().resource(obs).execute().getId().toUnqualifiedVersionless();
 
 		Encounter enc = new Encounter();
-		enc.getPatient().setReferenceElement(patientId);
+		enc.getSubject().setReferenceElement(patientId);
 		IIdType encId = ourClient.create().resource(enc).execute().getId().toUnqualifiedVersionless();
 
 		Parameters output = ourClient.operation().onInstance(patientId).named("everything").withNoParameters(Parameters.class).execute();

@@ -13,6 +13,7 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hl7.fhir.dstu3.hapi.validation.IValidationSupport;
 import org.hl7.fhir.dstu3.model.*;
+import org.hl7.fhir.instance.model.DiagnosticOrder;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -79,6 +80,9 @@ public abstract class BaseJpaDstu3Test extends BaseJpaTest {
 	@Qualifier("myCarePlanDaoDstu3")
 	protected IFhirResourceDao<CarePlan> myCarePlanDao;
 	@Autowired
+	@Qualifier("myProcedureRequestDaoDstu3")
+	protected IFhirResourceDao<ProcedureRequest> myProcedureRequestDao;
+	@Autowired
 	@Qualifier("myCodeSystemDaoDstu3")
 	protected IFhirResourceDaoCodeSystem<CodeSystem, Coding, CodeableConcept> myCodeSystemDao;
 	@Autowired
@@ -96,8 +100,8 @@ public abstract class BaseJpaDstu3Test extends BaseJpaTest {
 	@Qualifier("myDeviceDaoDstu3")
 	protected IFhirResourceDao<Device> myDeviceDao;
 	@Autowired
-	@Qualifier("myDiagnosticRequestDaoDstu3")
-	protected IFhirResourceDao<DiagnosticRequest> myDiagnosticRequestDao;
+	@Qualifier("myDiagnosticOrderDaoDstu3")
+	protected IFhirResourceDao<DiagnosticOrder> myDiagnosticOrderDao;
 	@Autowired
 	@Qualifier("myDiagnosticReportDaoDstu3")
 	protected IFhirResourceDao<DiagnosticReport> myDiagnosticReportDao;
