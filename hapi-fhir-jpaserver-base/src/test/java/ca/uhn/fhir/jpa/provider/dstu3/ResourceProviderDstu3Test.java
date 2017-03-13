@@ -1467,6 +1467,8 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 	 */
 	@Test
 	public void testEverythingWithLargeSet() throws Exception {
+		myFhirCtx.setParserErrorHandler(new StrictErrorHandler());
+		
 		String inputString = IOUtils.toString(getClass().getResourceAsStream("/david_big_bundle.json"), StandardCharsets.UTF_8);
 		Bundle inputBundle = myFhirCtx.newJsonParser().parseResource(Bundle.class, inputString);
 		inputBundle.setType(BundleType.TRANSACTION);
@@ -1480,9 +1482,17 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 
 		mySystemDao.transaction(mySrd, inputBundle);
 
-		Bundle responseBundle = ourClient.operation().onInstance(new IdType("Patient/A161443")).named("everything").withParameter(Parameters.class, "_count", new IntegerType(50)).useHttpGet()
-				.returnResourceType(Bundle.class).execute();
+		Bundle responseBundle = ourClient
+				.operation()
+				.onInstance(new IdType("Patient/A161443"))
+				.named("everything")
+				.withParameter(Parameters.class, "_count", new IntegerType(50))
+				.useHttpGet()
+				.returnResourceType(Bundle.class)
+				.execute();
 
+		ourLog.info(myFhirCtx.newXmlParser().setPrettyPrint(true).encodeResourceToString(responseBundle));
+		
 		TreeSet<String> ids = new TreeSet<String>();
 		for (int i = 0; i < responseBundle.getEntry().size(); i++) {
 			for (BundleEntryComponent nextEntry : responseBundle.getEntry()) {

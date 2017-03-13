@@ -130,7 +130,7 @@
 		{
 			"fullUrl": "urn:uuid:3b3f2d52-2153-44ac-b6b9-d1153db04561",
 			"resource": {
-				"resourceType": "DiagnosticRequest",
+				"resourceType": "ProcedureRequest",
 				"contained": [
 					{
 						"resourceType": "Practitioner",
