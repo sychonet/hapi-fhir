@@ -869,7 +869,7 @@ public class FhirResourceDaoDstu3TerminologyTest extends BaseJpaDstu3Test {
 
 		params = new SearchParameterMap();
 		params.add(AllergyIntolerance.SP_CATEGORY, new TokenParam(null, AllergyIntoleranceCategory.MEDICATION.toCode()).setModifier(TokenParamModifier.BELOW));
-		assertThat(toUnqualifiedVersionlessIdValues(myAllergyIntoleranceDao.search(params)), containsInAnyOrder(id1, id2));
+		assertThat(toUnqualifiedVersionlessIdValues(myAllergyIntoleranceDao.search(params)), containsInAnyOrder(id1));
 
 		params = new SearchParameterMap();
 		params.add(AllergyIntolerance.SP_CLINICAL_STATUS, new TokenParam(null, AllergyIntoleranceClinicalStatus.RESOLVED.toCode()).setModifier(TokenParamModifier.BELOW));

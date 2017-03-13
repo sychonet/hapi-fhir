@@ -13,7 +13,6 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hl7.fhir.dstu3.hapi.validation.IValidationSupport;
 import org.hl7.fhir.dstu3.model.*;
-import org.hl7.fhir.instance.model.DiagnosticOrder;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -99,9 +98,6 @@ public abstract class BaseJpaDstu3Test extends BaseJpaTest {
 	@Autowired
 	@Qualifier("myDeviceDaoDstu3")
 	protected IFhirResourceDao<Device> myDeviceDao;
-	@Autowired
-	@Qualifier("myDiagnosticOrderDaoDstu3")
-	protected IFhirResourceDao<DiagnosticOrder> myDiagnosticOrderDao;
 	@Autowired
 	@Qualifier("myDiagnosticReportDaoDstu3")
 	protected IFhirResourceDao<DiagnosticReport> myDiagnosticReportDao;
