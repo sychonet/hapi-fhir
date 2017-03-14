@@ -985,7 +985,7 @@
 				"diagnosis": [
 					{
 						"condition": {
-							"reference": "Condition/A161452"
+						"reference": "Condition/A161452"
 						}
 					}
 				]
@@ -1213,7 +1213,7 @@
 					},
 					{
 						"condition": {
-							"reference": "Condition/A161445"
+						"reference": "Condition/A161445"
 						}
 					}
 				]
@@ -1332,12 +1332,12 @@
 				"diagnosis": [
 					{
 						"condition": {
-						"reference": "Condition/A161450"
+							"reference": "Condition/A161450"
 						}
 					},
 					{
 						"condition": {
-							"reference": "Condition/A161451"
+						"reference": "Condition/A161451"
 						}
 					}
 				]

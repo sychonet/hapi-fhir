@@ -3312,15 +3312,15 @@ public class FhirResourceDaoDstu3Test extends BaseJpaDstu3Test {
 		SearchParameterMap params;
 		
 		params = new SearchParameterMap();
-		params.add(CarePlan.SP_DATE, new DateRangeParam("2010-01-01T10:00:00Z", null));
+		params.add(CarePlan.SP_ACTIVITY_DATE, new DateRangeParam("2010-01-01T10:00:00Z", null));
 		assertThat(toUnqualifiedVersionlessIdValues(myCarePlanDao.search(params)), contains(id.getValue()));
 
 		params = new SearchParameterMap();
-		params.add(CarePlan.SP_DATE, new DateRangeParam("2011-01-01T10:00:00Z", null));
+		params.add(CarePlan.SP_ACTIVITY_DATE, new DateRangeParam("2011-01-01T10:00:00Z", null));
 		assertThat(toUnqualifiedVersionlessIdValues(myCarePlanDao.search(params)), contains(id.getValue()));
 		
 		params = new SearchParameterMap();
-		params.add(CarePlan.SP_DATE, new DateRangeParam("2012-01-01T10:00:00Z", null));
+		params.add(CarePlan.SP_ACTIVITY_DATE, new DateRangeParam("2012-01-01T10:00:00Z", null));
 		assertThat(toUnqualifiedVersionlessIdValues(myCarePlanDao.search(params)), empty());
 	}
 

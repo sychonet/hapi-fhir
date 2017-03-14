@@ -157,6 +157,7 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 	@Override
 	public void before() throws Exception {
 		super.before();
+		myFhirCtx.setParserErrorHandler(new StrictErrorHandler());
 
 		myDaoConfig.setAllowMultipleDelete(true);
 	}
@@ -1165,13 +1166,12 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 	// }
 
 	/**
-	 * See #147
+	 * See #147"Patient"
 	 */
 	@Test
 	public void testEverythingPatientDoesntRepeatPatient() throws Exception {
 		Bundle b;
 		IParser parser = myFhirCtx.newJsonParser();
-		parser.setParserErrorHandler(new StrictErrorHandler());
 		b = parser.parseResource(Bundle.class, new InputStreamReader(ResourceProviderDstu3Test.class.getResourceAsStream("/bug147-bundle-dstu3.json")));
 
 		Bundle resp = ourClient.transaction().withBundle(b).execute();
@@ -1467,7 +1467,6 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 	 */
 	@Test
 	public void testEverythingWithLargeSet() throws Exception {
-		myFhirCtx.setParserErrorHandler(new StrictErrorHandler());
 		
 		String inputString = IOUtils.toString(getClass().getResourceAsStream("/david_big_bundle.json"), StandardCharsets.UTF_8);
 		Bundle inputBundle = myFhirCtx.newJsonParser().parseResource(Bundle.class, inputString);
@@ -2139,16 +2138,6 @@ public class ResourceProviderDstu3Test extends BaseResourceProviderDstu3Test {
 		}
 	}
 
-	@Test
-	public void testResourceSorting() throws Exception {
-		String input = IOUtils.toString(getClass().getResourceAsStream("/two_questionnaires.json"), StandardCharsets.UTF_8);
-		String respString = ourClient.transaction().withBundle(input).prettyPrint().execute();
-		ourLog.info(respString);
-
-		ourHttpClient.execute(new HttpGet("http://localhost:" + ourPort
-				+ "/QuestionnaireResponse?patient=QR3295&questionnaire=profile&_sort:desc=authored&_count=5&_include=QuestionnaireResponse:questionnaire&_include=QuestionnaireResponse:subject"));
-		// Bundle bundle =
-	}
 
 	@Test
 	public void testSaveAndRetrieveExistingNarrativeJson() {
